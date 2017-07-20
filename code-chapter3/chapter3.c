@@ -42,3 +42,25 @@ int main(void)
     exit(0);
 }
 
+# include <unistd.h>
+ssize_t read(int filedes, void * buff, size_t nbytes);
+ssize_t write(int filedes, const void * buff, size_t nbytes);
+
+//将标准输入复制到标准输出
+#define BUFFSIZE 8192
+int main(void)
+{
+    int n;
+    char buf[BUFFSIZE];
+    while((n = read(STDIN_FILENO, buf, BUFFSIZE)) > 0)
+       if (write(STDOUT_FILENO, buf, n) != n)
+          err_sys("write error");
+    if (n < 0)
+       err_sys("read error");
+    exit(0);
+}
+
+//dup和dup2函数
+int dup(int filedes);
+int dup2(int filedes, int filedes2);
+
