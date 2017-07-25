@@ -14,4 +14,30 @@
 
 * 类型tcflag_t的长度是以保持每个标志值。它经常被定义为 unsigned long。c_cc数组包含了所有可以更改的特殊字符。 
 
-* ​
+#### 获得和设置终端属性
+
+使用函数tcgetattr和tcsetattr可以获得或设置termios。这样也就可以检测和修改各种终端选择标志和特殊字符，以使终端按我们所希望的方式进行操作。
+
+#### 终端选择标志
+
+由SVR4支持的6个延迟值也有屏蔽标志： BSDLY、CRDLY、 FFDLY、 NLDLY、 TABDLY和VTDLY。
+
+#### stty命令
+
+在命令行中则用stty ( 1 )命令进行检查和更改。stty ( 1 )命令是表11 - 2中所列的头6个函数的界面。如果以- a选择项执行此命令，则显示终端的所有选择项。
+
+#### 波特率函数
+
+波特率（ baud rate）是一个历史沿用的术语，现在它指的是“位 /每秒” 。虽然大多数终端设备对输入和输出使用同一波特率，但是只要硬件许可，可以将它们设置为两个不同值。
+
+#### 行控制函数
+
+下列四个函数提供了终端设备的行控制能力:
+
+```c
+int tcdrain(int filedes) ;
+int tcflow(int filedes, int action) ;
+int tcflush(int filedes, int queue) ;
+int tcsendbreak(int filedes, int duration) ;
+```
+
