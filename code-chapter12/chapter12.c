@@ -81,3 +81,7 @@ int main(int argc, char * argv[])
     for(i = 1; i <= nmods; i++)
        printf("%s : %s\n", (i==nmods)?"driver":"module", list.sl_modlist++);
 }
+
+
+//select函数
+int select (int maxfdp1, fd_set * readfds, fd_set * writefds, fd_set * exceptfds, struct timeval * tvptr) ;
