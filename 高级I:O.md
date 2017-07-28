@@ -92,4 +92,28 @@ while((n=read(STDIN_FILENO, buf, BUFSIZ))>0)
 
 * 为了对一个流设备起动异步 I/O，需要调用 ioctl，而其第二个参数（request）则为I_SETSIG。第三个参数则是由表 12- 6中一个或多个常数构成的整型值。这些常数在 < stropts.h >中定义。
 
-* ​
+* readv和writev函数
+  readv和writev函数用于在一个函数调用中读、写多个非连续缓存。有时也将这两个函数称为散布读
+
+  （ scatter read）和聚集写（ gather write）
+
+  这两个函数的第二个参数是指向 i o v e c结构数组的一个指针
+
+* writev以顺序iov[0], iov[ 1 ]至iov[iovcnt-1] 从缓存中聚集输出数据。 writev返回输出的字节总数，它应等于所有缓存长度之和。
+
+* readv则将读入的数据按上述同样顺序散布到缓存中。readv总是先填满一个缓存，然后再填写下一个。readv返回读得的总字节数。如果遇到文件结尾，已无数据可读，则返回 0。
+
+* 两个函数 readn和writen的功能是读、写指定的 N字节数据，并处理返回值小于要求值的情况。这两个函数只是按需多次调用 read和write直至读、写了N字节数据。
+
+* 存储映射I/O：
+
+  于是当从缓存中取数据，就相当于读文件中的相应字节。与其类似，将数据存入缓存，则相应字节就自动地写入文件。
+
+  ```
+  caddr_t mmap(caddr_t addr, size_t len,int prot,int flag, int filedes,off_t off);
+  返回：若成功则为映射区的起始地址，若出错则为 - 1
+  ```
+
+  数据类型caddr_t通常定义为char *。 addr参数用于指定映射存储区的起始地址。通常将其设置为0，这表示由系统选择该映射区的起始地址。此函数的返回地址是：该映射区的起始地址。
+
+  ​

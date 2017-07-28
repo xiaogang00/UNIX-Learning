@@ -85,3 +85,20 @@ int main(int argc, char * argv[])
 
 //select函数
 int select (int maxfdp1, fd_set * readfds, fd_set * writefds, fd_set * exceptfds, struct timeval * tvptr) ;
+
+ssize_t readv(int filedes, const struct iovec iov[ ], int iovcnt);
+ssize_t writev(int filedes, const struct iovec iov[ ], int iovcnt);
+//两个函数返回：已读、写的字节数，若出错则为 - 1
+
+struct iovec {
+void *iov_base; /* starting address of buffer */
+size_t iov_len; /* size of buffer */
+};
+
+ssize_t readn(int filedes,void * buff,size_t nbytes) ;
+ssize_t writen(int filedes,void * buff,size_t nbytes) ;
+//两个函数返回：已读、写字节数，若出错则为 - 1
+
+caddr_t mmap(caddr_t addr, size_t len,int prot,int flag, int filedes,off_t off);
+//返回：若成功则为映射区的起始地址，若出错则为 - 1
+
